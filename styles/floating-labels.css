@@ -1,0 +1,43 @@
+.floating-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(30, 30, 50, 0.7);
+    border-radius: 10px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 10px 5px 10px;
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--accent);
+    color: white;
+    outline: none;
+}
+
+.form-group label {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 5px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: var(--dark);
+    padding: 0 5px;
+}
