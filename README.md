@@ -1,11 +1,8 @@
-[# CodeVault
-](https://samaalt.github.io/CodeVault/
-
 # CodeVault 🗃️✨
 
 **Your personal repository of web development features and effects**
 
-![CodeVault Screenshot](screenshot.png) *(Add a screenshot later)*
+Website Link: https://samaalt.github.io/CodeVault/
 
 ## 🌟 About
 
