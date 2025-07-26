@@ -1,0 +1,23 @@
+.gradient-card {
+    position: relative;
+    width: 300px;
+    padding: 2px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, 
+        #ff8b94, #9d50bb, #41d8bf, #6e48aa);
+    background-size: 300% 300%;
+    animation: gradient 4s ease infinite;
+}
+
+.gradient-card .card-content {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 20px;
+    height: 100%;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
