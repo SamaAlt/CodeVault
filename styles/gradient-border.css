@@ -1,3 +1,18 @@
+.feature-demo {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(30, 30, 50, 0.5);
+    border-radius: 10px;
+}
+
+.demo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    min-height: 200px;
+}
+
 .gradient-card {
     position: relative;
     width: 300px;
@@ -7,6 +22,7 @@
         #ff8b94, #9d50bb, #41d8bf, #6e48aa);
     background-size: 300% 300%;
     animation: gradient 4s ease infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .gradient-card .card-content {
@@ -14,10 +30,45 @@
     border-radius: 8px;
     padding: 20px;
     height: 100%;
+    color: white;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.gradient-card h3 {
+    color: var(--accent);
+    margin-top: 0;
 }
 
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+}
+
+/* Reuse existing styles from main.css for consistency */
+.feature-usage {
+    background: rgba(30, 30, 50, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.feature-usage ul {
+    list-style-position: inside;
+    margin-top: 15px;
+}
+
+.feature-usage li {
+    margin-bottom: 10px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: var(--secondary);
 }
