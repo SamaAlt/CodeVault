@@ -1,4 +1,115 @@
-<div class="demo-container">
-    <button id="theme-toggle" class="theme-btn">Toggle Theme</button>
-    <p>Current theme: <span id="theme-status">Dark</span></p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark/Light Mode Toggle | CodeVault</title>
+    <link rel="stylesheet" href="../styles/dark-mode.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dark/Light Mode Toggle</h1>
+            <p class="subtitle">Switch between color schemes with ease</p>
+            <a href="../index.html" class="back-link">← Back to CodeVault</a>
+        </header>
+        
+        <main>
+            <section class="feature-demo">
+                <h2>Demo</h2>
+                <div class="demo-container">
+                    <button id="theme-toggle" class="theme-btn">Toggle Theme</button>
+                    <p>Current theme: <span id="theme-status">Dark</span></p>
+                </div>
+            </section>
+            
+            <section class="feature-code">
+                <h2>Implementation</h2>
+                <div class="code-tabs">
+                    <div class="tab active" data-tab="html">HTML</div>
+                    <div class="tab" data-tab="css">CSS</div>
+                    <div class="tab" data-tab="js">JavaScript</div>
+                </div>
+                
+                <div class="code-content html-code active">
+                    <pre><code>&lt;!-- Theme Toggle Button --&gt;
+&lt;button id="theme-toggle" class="theme-btn"&gt;Toggle Theme&lt;/button&gt;
+
+&lt;!-- Theme Status Display --&gt;
+&lt;p&gt;Current theme: &lt;span id="theme-status"&gt;Dark&lt;/span&gt;&lt;/p&gt;</code></pre>
+                </div>
+                
+                <div class="code-content css-code">
+                    <pre><code>:root {
+    --bg-color: #1a1a2e;
+    --text-color: #f1f1f1;
+}
+
+[data-theme="light"] {
+    --bg-color: #f1f1f1;
+    --text-color: #1a1a2e;
+}
+
+.theme-btn {
+    background: var(--accent);
+    color: var(--dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}</code></pre>
+                </div>
+                
+                <div class="code-content js-code">
+                    <pre><code>const toggle = document.getElementById('theme-toggle');
+const status = document.getElementById('theme-status');
+
+// Toggle theme function
+toggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        status.textContent = 'Dark';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        status.textContent = 'Light';
+    }
+    localStorage.setItem('theme', document.documentElement.getAttribute('data-theme'));
+});
+
+// Check for saved theme preference
+if (localStorage.getItem('theme')) {
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+    status.textContent = localStorage.getItem('theme') === 'light' ? 'Light' : 'Dark';
+}</code></pre>
+                </div>
+            </section>
+            
+            <section class="feature-usage">
+                <h2>Usage Notes</h2>
+                <ul>
+                    <li>Uses CSS variables for easy theming</li>
+                    <li>Saves user preference in localStorage</li>
+                    <li>Easily extendable with more theme options</li>
+                    <li>Works well with prefers-color-scheme media query</li>
+                    <li>Remember to define all color variables for both themes</li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Added to CodeVault: June 2023</p>
+        </footer>
+    </div>
+    
+    <script src="../scripts/dark-mode.js"></script>
+</body>
+</html>
