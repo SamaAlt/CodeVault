@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark/Light Mode Toggle | CodeVault</title>
     <link rel="stylesheet" href="../styles/dark-mode.css">
     <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .feature-demo, .feature-code, .feature-usage {
+            transition: background-color 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -44,11 +61,17 @@
                     <pre><code>:root {
     --bg-color: #1a1a2e;
     --text-color: #f1f1f1;
+    --accent: #9d50bb;
+    --secondary: #41d8bf;
+    --dark: #0f0f1a;
 }
 
 [data-theme="light"] {
     --bg-color: #f1f1f1;
     --text-color: #1a1a2e;
+    --accent: #6e48aa;
+    --secondary: #9d50bb;
+    --dark: #ffffff;
 }
 
 .theme-btn {
@@ -72,24 +95,41 @@
                     <pre><code>const toggle = document.getElementById('theme-toggle');
 const status = document.getElementById('theme-status');
 
-// Toggle theme function
-toggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    if (currentTheme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        status.textContent = 'Dark';
-    } else {
+// Initialize theme
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        status.textContent = savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1);
+    } else if (prefersLight) {
         document.documentElement.setAttribute('data-theme', 'light');
         status.textContent = 'Light';
     }
-    localStorage.setItem('theme', document.documentElement.getAttribute('data-theme'));
+}
+
+// Toggle theme
+toggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    status.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+    localStorage.setItem('theme', newTheme);
 });
 
-// Check for saved theme preference
-if (localStorage.getItem('theme')) {
-    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
-    status.textContent = localStorage.getItem('theme') === 'light' ? 'Light' : 'Dark';
-}</code></pre>
+// Initialize on load
+initTheme();
+
+// Watch for system theme changes
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        status.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+    }
+});</code></pre>
                 </div>
             </section>
             
@@ -98,9 +138,9 @@ if (localStorage.getItem('theme')) {
                 <ul>
                     <li>Uses CSS variables for easy theming</li>
                     <li>Saves user preference in localStorage</li>
+                    <li>Respects system color scheme preferences</li>
+                    <li>Includes smooth transitions between themes</li>
                     <li>Easily extendable with more theme options</li>
-                    <li>Works well with prefers-color-scheme media query</li>
-                    <li>Remember to define all color variables for both themes</li>
                 </ul>
             </section>
         </main>
