@@ -1,0 +1,18 @@
+:root {
+    --bg-color: #1a1a2e;
+    --text-color: #f1f1f1;
+}
+
+[data-theme="light"] {
+    --bg-color: #f1f1f1;
+    --text-color: #1a1a2e;
+}
+
+.theme-btn {
+    background: var(--accent);
+    color: var(--dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
