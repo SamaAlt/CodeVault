@@ -1,18 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Tab functionality
-    const tabs = document.querySelectorAll('.tab');
-    const codeContents = document.querySelectorAll('.code-content');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            codeContents.forEach(c => c.classList.remove('active'));
-            tab.classList.add('active');
-            const tabName = tab.getAttribute('data-tab');
-            document.querySelector(`.${tabName}-code`).classList.add('active');
-        });
-    });
-    
     // Theme functionality
     const toggle = document.getElementById('theme-toggle');
     const status = document.getElementById('theme-status');
