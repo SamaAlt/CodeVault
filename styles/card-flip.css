@@ -1,7 +1,20 @@
+.feature-demo {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(30, 30, 50, 0.5);
+    border-radius: 10px;
+}
+
+.demo-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
 .flip-card {
     perspective: 1000px;
     width: 300px;
     height: 200px;
+    margin: 0 auto 30px;
 }
 
 .flip-card-inner {
@@ -10,9 +23,10 @@
     height: 100%;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    cursor: pointer;
 }
 
-.flip-card:hover .flip-card-inner {
+.flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
 }
 
@@ -27,6 +41,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .flip-card-front {
@@ -38,4 +53,92 @@
     background: var(--secondary);
     color: white;
     transform: rotateY(180deg);
+}
+
+#reset-card {
+    background: var(--accent);
+    color: var(--dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+#reset-card:hover {
+    background: var(--secondary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Code display styles */
+.feature-code {
+    margin-bottom: 40px;
+}
+
+.code-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #3a3a5a;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: rgba(30, 30, 50, 0.5);
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s;
+}
+
+.tab.active {
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: bold;
+}
+
+.code-content {
+    display: none;
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 0 5px 5px 5px;
+    overflow-x: auto;
+}
+
+.code-content.active {
+    display: block;
+}
+
+pre {
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+code {
+    color: #41d8bf;
+}
+
+.feature-usage {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(30, 30, 50, 0.5);
+    border-radius: 10px;
+}
+
+.feature-usage h2 {
+    margin-top: 0;
+}
+
+.feature-usage ul {
+    padding-left: 20px;
+}
+
+.feature-usage li {
+    margin-bottom: 10px;
+    line-height: 1.5;
 }
