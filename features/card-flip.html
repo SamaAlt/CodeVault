@@ -1,13 +1,160 @@
-<div class="demo-container">
-    <div class="flip-card">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">
-                <h3>Front Side</h3>
-            </div>
-            <div class="flip-card-back">
-                <h3>Back Side</h3>
-                <p>This is the reverse side</p>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Flip Animation | CodeVault</title>
+    <link rel="stylesheet" href="../styles/card-flip.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Card Flip Animation</h1>
+            <p class="subtitle">A CSS-powered 3D card with smooth flip transition</p>
+            <a href="../index.html" class="back-link">← Back to CodeVault</a>
+        </header>
+        
+        <main>
+            <section class="feature-demo">
+                <h2>Demo</h2>
+                <div class="demo-container">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>Front Side</h3>
+                                <p>Hover or click to flip</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Back Side</h3>
+                                <p>This is the reverse side</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="reset-card">Reset Card</button>
+                </div>
+            </section>
+            
+            <section class="feature-code">
+                <h2>Source Code</h2>
+                <div class="code-tabs">
+                    <div class="tab active" data-tab="html">HTML</div>
+                    <div class="tab" data-tab="css">CSS</div>
+                    <div class="tab" data-tab="js">JavaScript</div>
+                </div>
+                
+                <div class="html-code code-content active">
+                    <pre><code>&lt;div class="flip-card"&gt;
+    &lt;div class="flip-card-inner"&gt;
+        &lt;div class="flip-card-front"&gt;
+            &lt;h3&gt;Front Side&lt;/h3&gt;
+            &lt;p&gt;Hover or click to flip&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="flip-card-back"&gt;
+            &lt;h3&gt;Back Side&lt;/h3&gt;
+            &lt;p&gt;This is the reverse side&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                
+                <div class="css-code code-content">
+                    <pre><code>.flip-card {
+    perspective: 1000px;
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.flip-card-front {
+    background: var(--accent);
+    color: var(--dark);
+}
+
+.flip-card-back {
+    background: var(--secondary);
+    color: white;
+    transform: rotateY(180deg);
+}</code></pre>
+                </div>
+                
+                <div class="js-code code-content">
+                    <pre><code>document.addEventListener('DOMContentLoaded', () => {
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab');
+    const codeContents = document.querySelectorAll('.code-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            codeContents.forEach(c => c.classList.remove('active'));
+            
+            tab.classList.add('active');
+            const tabName = tab.getAttribute('data-tab');
+            document.querySelector(`.${tabName}-code`).classList.add('active');
+        });
+    });
+    
+    // Card flip functionality
+    const flipCard = document.querySelector('.flip-card');
+    flipCard.addEventListener('click', () => {
+        flipCard.classList.toggle('flipped');
+    });
+    
+    // Reset card button
+    document.getElementById('reset-card').addEventListener('click', () => {
+        flipCard.classList.remove('flipped');
+    });
+    
+    // Console message specific to this feature
+    console.log('%cCard Flip Animation Loaded', 'color: #6e48aa; font-weight: bold;');
+});</code></pre>
+                </div>
+            </section>
+            
+            <section class="feature-usage">
+                <h2>Usage Notes</h2>
+                <ul>
+                    <li><strong>Interaction:</strong> Click on the card to flip it to the other side</li>
+                    <li><strong>Reset:</strong> Use the "Reset Card" button to return the card to its original position</li>
+                    <li><strong>Customization:</strong> Modify colors, dimensions, and transition timing in the CSS</li>
+                    <li><strong>Note:</strong> To view the source code for this feature, open Chrome DevTools (Inspect) > Sources > CodeVault > HTML(features)/CSS(scripts)/JS(scripts) files.</li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Added to CodeVault: June 2025</p>
+        </footer>
     </div>
-</div>
+    
+    <script src="../scripts/card-flip.js"></script>
+</body>
+</html>
