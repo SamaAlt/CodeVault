@@ -1,6 +1,180 @@
-<div class="demo-container">
-    <div class="glitch-container">
-        <h3 class="glitch" data-text="GLITCH EFFECT">GLITCH EFFECT</h3>
-        <div class="glitch-img"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holographic Glitch Effect | CodeVault</title>
+    <link rel="stylesheet" href="../styles/glitch-effect.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Holographic Glitch Effect</h1>
+            <p class="subtitle">A CSS-powered glitch animation with holographic elements</p>
+            <a href="../index.html" class="back-link">← Back to CodeVault</a>
+        </header>
+        
+        <main>
+            <section class="feature-demo">
+                <h2>Demo</h2>
+                <div class="demo-container">
+                    <div class="glitch-container">
+                        <h3 class="glitch" data-text="GLITCH EFFECT">GLITCH EFFECT</h3>
+                        <div class="glitch-img"></div>
+                    </div>
+                    <button id="restart-glitch">Restart Animation</button>
+                </div>
+            </section>
+            
+            <section class="feature-code">
+                <h2>Implementation</h2>
+                <div class="code-tabs">
+                    <div class="tab active" data-tab="html">HTML</div>
+                    <div class="tab" data-tab="css">CSS</div>
+                    <div class="tab" data-tab="js">JavaScript</div>
+                </div>
+                
+                <div class="code-content html-code active">
+                    <pre><code>&lt;div class="glitch-container"&gt;
+    &lt;h3 class="glitch" data-text="GLITCH EFFECT"&gt;GLITCH EFFECT&lt;/h3&gt;
+    &lt;div class="glitch-img"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                
+                <div class="code-content css-code">
+                    <pre><code>.glitch-container {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(to bottom, #0f0f1a, #1a1a2e);
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.glitch {
+    position: relative;
+    color: white;
+    font-size: 4rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    animation: glitch 5s infinite;
+}
+
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    color: #0ff;
+    z-index: -1;
+    animation: glitch-before 2s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch::after {
+    color: #f0f;
+    z-index: -2;
+    animation: glitch-after 3s infinite;
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-5px, 5px); }
+    40% { transform: translate(-5px, -5px); }
+    60% { transform: translate(5px, 5px); }
+    80% { transform: translate(5px, -5px); }
+}
+
+@keyframes glitch-before {
+    0%, 100% { transform: translate(0); opacity: 0.8; }
+    33% { transform: translate(6px, -3px); opacity: 0.6; }
+    66% { transform: translate(-4px, 4px); opacity: 0.9; }
+}
+
+@keyframes glitch-after {
+    0%, 100% { transform: translate(0); opacity: 0.8; }
+    33% { transform: translate(-5px, 2px); opacity: 0.7; }
+    66% { transform: translate(7px, -2px); opacity: 0.6; }
+}
+
+.glitch-img {
+    width: 300px;
+    height: 200px;
+    background: linear-gradient(45deg, #0ff, #f0f, #0ff);
+    position: relative;
+    animation: glitch-img 8s infinite;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5),
+                0 0 40px rgba(255, 0, 255, 0.3);
+}
+
+.glitch-img::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: scan 3s linear infinite;
+}
+
+@keyframes glitch-img {
+    0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
+    20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); }
+    40% { transform: translate(-5px, -5px); filter: hue-rotate(180deg); }
+    60% { transform: translate(5px, 5px); filter: hue-rotate(270deg); }
+    80% { transform: translate(5px, -5px); filter: hue-rotate(360deg); }
+}
+
+@keyframes scan {
+    0% { top: -100%; }
+    100% { top: 100%; }
+}</code></pre>
+                </div>
+                
+                <div class="code-content js-code">
+                    <pre><code>document.getElementById('restart-glitch').addEventListener('click', () => {
+    const glitchElements = document.querySelectorAll('.glitch, .glitch-img');
+    
+    glitchElements.forEach(element => {
+        const animation = element.style.animation;
+        element.style.animation = 'none';
+        void element.offsetWidth; // Trigger reflow
+        element.style.animation = animation;
+    });
+});</code></pre>
+                </div>
+            </section>
+            
+            <section class="feature-usage">
+                <h2>Usage Notes</h2>
+                <ul>
+                    <li>Perfect for cyberpunk or futuristic designs</li>
+                    <li>Adjust colors to match your theme</li>
+                    <li>Modify animation timing for different effects</li>
+                    <li>Combine with other glitch elements for complex scenes</li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Added to CodeVault: June 2023</p>
+        </footer>
     </div>
-</div>
+    
+    <script src="../scripts/glitch-effect.js"></script>
+</body>
+</html>
