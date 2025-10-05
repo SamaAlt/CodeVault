@@ -1,0 +1,294 @@
+/* SVG Morph Feature Styles */
+.feature-demo {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(30, 30, 50, 0.5);
+    border-radius: 10px;
+}
+
+.demo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+    padding: 40px;
+    background: rgba(10, 10, 20, 0.7);
+    border-radius: 10px;
+}
+
+/* SVG Container */
+svg {
+    width: 300px;
+    height: 300px;
+    background: rgba(20, 20, 35, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Morph Path Styling */
+#morph-path {
+    fill: var(--accent);
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 10, 2;
+    filter: drop-shadow(0 0 10px rgba(65, 216, 191, 0.5));
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect on SVG */
+svg:hover #morph-path {
+    filter: drop-shadow(0 0 15px rgba(65, 216, 191, 0.8));
+    opacity: 1;
+    stroke-dasharray: 5, 1;
+}
+
+/* Morph Button Styling */
+#morph-btn {
+    background: linear-gradient(45deg, var(--accent), var(--secondary));
+    color: var(--dark);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(65, 216, 191, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+#morph-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+#morph-btn:hover::before {
+    left: 100%;
+}
+
+#morph-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(65, 216, 191, 0.5);
+}
+
+#morph-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 15px rgba(65, 216, 191, 0.4);
+}
+
+/* Shape Labels */
+.shape-label {
+    position: absolute;
+    background: rgba(30, 30, 50, 0.9);
+    color: var(--accent);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.demo-container:hover .shape-label {
+    opacity: 1;
+}
+
+/* Code Display Styles (same as other features) */
+.feature-code {
+    margin-bottom: 40px;
+}
+
+.code-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #3a3a5a;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: rgba(30, 30, 50, 0.5);
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.tab.active {
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: bold;
+}
+
+.code-content {
+    display: none;
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 0 5px 5px 5px;
+    overflow-x: auto;
+}
+
+.code-content.active {
+    display: block;
+}
+
+pre {
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+code {
+    color: #41d8bf;
+}
+
+/* Feature Usage Section */
+.feature-usage {
+    background: rgba(30, 30, 50, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.feature-usage h2 {
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.feature-usage ul {
+    list-style-position: inside;
+    margin-top: 15px;
+}
+
+.feature-usage li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.feature-usage li::marker {
+    color: var(--accent);
+}
+
+/* Back Link Styling */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.back-link:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .demo-container {
+        padding: 20px;
+    }
+    
+    svg {
+        width: 250px;
+        height: 250px;
+    }
+    
+    #morph-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    svg {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .demo-container {
+        gap: 20px;
+    }
+}
+
+/* Animation for initial load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.demo-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Success state for morph completion */
+.morph-success #morph-path {
+    filter: drop-shadow(0 0 20px rgba(65, 216, 191, 0.8));
+    stroke: #41d8bf;
+    stroke-width: 3;
+}
+
+/* Loading state for morph in progress */
+.morph-loading #morph-path {
+    stroke-dasharray: 2, 1;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Multiple shape preview (optional enhancement) */
+.shape-previews {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.preview-shape {
+    width: 60px;
+    height: 60px;
+    background: rgba(65, 216, 191, 0.2);
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preview-shape:hover {
+    background: rgba(65, 216, 191, 0.4);
+    transform: scale(1.1);
+}
+
+.preview-shape.active {
+    background: var(--accent);
+    border-color: #fff;
+}
