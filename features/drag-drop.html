@@ -1,7 +1,49 @@
-<div class="demo-container">
-    <div class="drop-zone">
-        <span class="drop-zone__prompt">Drop files here or click to upload</span>
-        <input type="file" class="drop-zone__input">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop Upload | CodeVault</title>
+    <link rel="stylesheet" href="../styles/drag-drop.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Drag & Drop Upload</h1>
+            <p class="subtitle">Interactive file upload with drag and drop functionality</p>
+            <a href="../index.html" class="back-link">← Back to CodeVault</a>
+        </header>
+        
+        <main>
+            <section class="feature-demo">
+                <h2>Demo</h2>
+                <div class="demo-container">
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">Drop files here or click to upload</span>
+                        <input type="file" class="drop-zone__input" multiple>
+                    </div>
+                    <div class="file-preview"></div>
+                </div>
+            </section>
+            
+            <section class="feature-usage">
+                <h2>Usage Notes</h2>
+                <ul>
+                    <li>Drag and drop files directly onto the upload zone</li>
+                    <li>Click the upload zone to browse for files</li>
+                    <li>Supports multiple file selection</li>
+                    <li>Preview images and file information</li>
+                    <li><strong>Note:</strong> To view the source code for this feature, open Chrome DevTools (Inspect) > Sources > CodeVault > HTML(features)/CSS(scripts)/JS(scripts) files.</li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Added to CodeVault: June 2025</p>
+        </footer>
     </div>
-    <div class="file-preview"></div>
-</div>
+    
+    <script src="../scripts/drag-drop.js"></script>
+</body>
+</html>
