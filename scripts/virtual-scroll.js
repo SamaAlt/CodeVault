@@ -1,271 +1,166 @@
-/* Virtual Scroll Feature Styles */
-.feature-demo {
-    margin-bottom: 40px;
-    padding: 20px;
-    background: rgba(30, 30, 50, 0.5);
-    border-radius: 10px;
-}
-
-.demo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-/* Virtual Scroll Container */
-.virtual-scroll-container {
-    height: 400px;
-    width: 100%;
-    max-width: 600px;
-    border: 2px solid var(--accent);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    background: rgba(20, 20, 35, 0.8);
-}
-
-/* Scroll Viewport */
-.scroll-viewport {
-    height: 100%;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent) rgba(30, 30, 50, 0.5);
-}
-
-.scroll-viewport::-webkit-scrollbar {
-    width: 8px;
-}
-
-.scroll-viewport::-webkit-scrollbar-track {
-    background: rgba(30, 30, 50, 0.5);
-}
-
-.scroll-viewport::-webkit-scrollbar-thumb {
-    background-color: var(--accent);
-    border-radius: 4px;
-}
-
-.scroll-viewport::-webkit-scrollbar-thumb:hover {
-    background-color: var(--secondary);
-}
-
-/* Scroll Content */
-.scroll-content {
-    position: relative;
-}
-
-/* List Items */
-.list-item {
-    position: absolute;
-    width: 100%;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(65, 216, 191, 0.2);
-    background: rgba(30, 30, 50, 0.6);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.list-item:hover {
-    background: rgba(65, 216, 191, 0.1);
-    transform: translateX(5px);
-    border-left: 3px solid var(--accent);
-}
-
-.list-item:nth-child(even) {
-    background: rgba(40, 40, 60, 0.6);
-}
-
-/* Item Number Indicator */
-.item-number {
-    width: 30px;
-    height: 30px;
-    background: var(--accent);
-    color: var(--dark);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-/* Item Content */
-.item-content {
-    flex: 1;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.item-content h4 {
-    color: var(--accent);
-    margin-bottom: 5px;
-    font-size: 1rem;
-}
-
-.item-content p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.85rem;
-    margin: 0;
-}
-
-/* Stats Display */
-.scroll-stats {
-    margin-top: 15px;
-    padding: 15px 25px;
-    background: rgba(30, 30, 50, 0.7);
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid rgba(65, 216, 191, 0.3);
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.scroll-stats span {
-    color: var(--accent);
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-/* Scroll Controls */
-.scroll-controls {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.scroll-controls button {
-    padding: 10px 20px;
-    background: linear-gradient(45deg, var(--accent), var(--secondary));
-    color: var(--dark);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Roboto Mono', monospace;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(65, 216, 191, 0.2);
-}
-
-.scroll-controls button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(65, 216, 191, 0.4);
-}
-
-.scroll-controls button:active {
-    transform: translateY(-1px);
-}
-
-/* Feature Usage Section */
-.feature-usage {
-    background: rgba(30, 30, 50, 0.5);
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-.feature-usage h2 {
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-.feature-usage ul {
-    list-style-position: inside;
-    margin-top: 15px;
-}
-
-.feature-usage li {
-    margin-bottom: 10px;
-    padding-left: 10px;
-}
-
-.feature-usage li::marker {
-    color: var(--accent);
-}
-
-/* Back Link Styling */
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: var(--accent);
-    text-decoration: none;
-    transition: color 0.3s;
-    font-family: 'Roboto Mono', monospace;
-}
-
-.back-link:hover {
-    color: var(--secondary);
-    text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .virtual-scroll-container {
-        height: 300px;
+document.addEventListener('DOMContentLoaded', () => {
+    // Tab functionality (if you add tabs in the future)
+    const tabs = document.querySelectorAll('.tab');
+    const codeContents = document.querySelectorAll('.code-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            codeContents.forEach(c => c.classList.remove('active'));
+            
+            tab.classList.add('active');
+            const tabName = tab.getAttribute('data-tab');
+            document.querySelector(`.${tabName}-code`).classList.add('active');
+        });
+    });
+    
+    // Virtual Scroll Implementation
+    class VirtualScroll {
+        constructor(container, itemCount, itemHeight, renderItem) {
+            this.container = container;
+            this.itemCount = itemCount;
+            this.itemHeight = itemHeight;
+            this.renderItem = renderItem;
+            this.visibleItems = 20;
+            this.selectedIndex = -1;
+            
+            this.init();
+        }
+        
+        init() {
+            this.viewport = this.container.querySelector('.scroll-viewport');
+            this.content = this.container.querySelector('.scroll-content');
+            
+            // Set total height for virtual scrolling
+            this.content.style.height = `${this.itemCount * this.itemHeight}px`;
+            
+            // Add scroll event listener
+            this.viewport.addEventListener('scroll', () => this.render());
+            
+            // Initialize rendering
+            this.render();
+            
+            // Update statistics
+            this.updateStats();
+        }
+        
+        render() {
+            const scrollTop = this.viewport.scrollTop;
+            const startIndex = Math.floor(scrollTop / this.itemHeight);
+            const endIndex = Math.min(startIndex + this.visibleItems, this.itemCount - 1);
+            
+            // Clear existing items
+            this.content.innerHTML = '';
+            
+            // Create and append visible items
+            for (let i = startIndex; i <= endIndex; i++) {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                if (i === this.selectedIndex) {
+                    item.classList.add('selected');
+                }
+                item.style.top = `${i * this.itemHeight}px`;
+                item.style.height = `${this.itemHeight}px`;
+                item.innerHTML = this.renderItem(i);
+                
+                // Add click handler for selection
+                item.addEventListener('click', () => {
+                    this.selectItem(i);
+                });
+                
+                this.content.appendChild(item);
+            }
+            
+            // Update visible count
+            document.getElementById('visible-count').textContent = (endIndex - startIndex + 1);
+            
+            // Update performance indicator
+            this.updatePerformance(startIndex, endIndex);
+        }
+        
+        selectItem(index) {
+            // Remove previous selection
+            const prevSelected = document.querySelector('.list-item.selected');
+            if (prevSelected) {
+                prevSelected.classList.remove('selected');
+            }
+            
+            // Set new selection
+            this.selectedIndex = index;
+            const newSelected = document.querySelectorAll('.list-item')[index - this.getStartIndex()];
+            if (newSelected) {
+                newSelected.classList.add('selected');
+            }
+            
+            console.log(`Selected item ${index}`);
+        }
+        
+        getStartIndex() {
+            const scrollTop = this.viewport.scrollTop;
+            return Math.floor(scrollTop / this.itemHeight);
+        }
+        
+        updateStats() {
+            document.getElementById('total-count').textContent = this.itemCount.toLocaleString();
+        }
+        
+        updatePerformance(startIndex, endIndex) {
+            // Performance monitoring (optional)
+            const renderedCount = endIndex - startIndex + 1;
+            const memoryUsed = Math.round((renderedCount * 0.5) / 1024); // Rough estimate in KB
+        }
+        
+        scrollToIndex(index) {
+            const scrollPosition = index * this.itemHeight;
+            this.viewport.scrollTo({
+                top: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
     }
     
-    .scroll-controls {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+    // Create sample data render function
+    function renderListItem(index) {
+        const colors = ['#41d8bf', '#9d50bb', '#ff8b94', '#6e48aa'];
+        const color = colors[index % colors.length];
+        const categories = ['Technology', 'Design', 'Development', 'Business', 'Creative'];
+        const category = categories[index % categories.length];
+        
+        return `
+            <div class="item-number" style="background: ${color}">${index + 1}</div>
+            <div class="item-content">
+                <h4>Virtual Item #${index + 1}</h4>
+                <p>Category: ${category} • Created: ${new Date().toLocaleDateString()}</p>
+            </div>
+        `;
     }
     
-    .scroll-controls button {
-        width: 200px;
-    }
-}
-
-@media (max-width: 480px) {
-    .virtual-scroll-container {
-        height: 250px;
-    }
+    // Initialize virtual scroll
+    const virtualScrollContainer = document.querySelector('.virtual-scroll-container');
+    const ITEM_COUNT = 10000;
+    const ITEM_HEIGHT = 60;
     
-    .list-item {
-        padding: 12px 15px;
-    }
+    const virtualScroll = new VirtualScroll(
+        virtualScrollContainer,
+        ITEM_COUNT,
+        ITEM_HEIGHT,
+        renderListItem
+    );
     
-    .item-number {
-        width: 25px;
-        height: 25px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Loading Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.list-item {
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* Selected Item State */
-.list-item.selected {
-    background: rgba(65, 216, 191, 0.2);
-    border-left: 3px solid var(--secondary);
-    box-shadow: inset 0 0 10px rgba(65, 216, 191, 0.1);
-}
-
-/* Performance Indicator */
-.performance-indicator {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(30, 30, 50, 0.8);
-    color: var(--accent);
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    border: 1px solid rgba(65, 216, 191, 0.3);
-}
+    // Scroll control buttons
+    document.getElementById('scrollToTop').addEventListener('click', () => {
+        virtualScroll.scrollToIndex(0);
+    });
+    
+    document.getElementById('scrollToMiddle').addEventListener('click', () => {
+        virtualScroll.scrollToIndex(Math.floor(ITEM_COUNT / 2));
+    });
+    
+    document.getElementById('scrollToBottom').addEventListener('click', () => {
+        virtualScroll.scrollToIndex(ITEM_COUNT - 20); // Leave some items visible
+    });
+    
+    // Console message
+    console.log('%cVirtual Scroll Loaded', 'color: #41d8bf; font-weight: bold;');
+    console.log(`%cRendering ${ITEM_COUNT.toLocaleString()} items virtually`, 'color: #9d50bb;');
+});
