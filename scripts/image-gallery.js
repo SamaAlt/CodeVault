@@ -1,160 +1,152 @@
-/* Image Gallery Feature Styles */
-.feature-demo {
-    margin-bottom: 40px;
-    padding: 20px;
-    background: rgba(30, 30, 50, 0.5);
-    border-radius: 10px;
-}
-
-.demo-container {
-    margin-top: 20px;
-}
-
-.gallery-controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    padding: 15px;
-    background: rgba(30, 30, 50, 0.3);
-    border-radius: 8px;
-    border: 1px solid rgba(110, 72, 170, 0.3);
-}
-
-.gallery-controls input, .gallery-controls select {
-    padding: 10px 15px;
-    background: rgba(20, 20, 35, 0.8);
-    border: 1px solid var(--accent);
-    border-radius: 5px;
-    color: white;
-    min-width: 150px;
-    font-family: 'Roboto Mono', monospace;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.gallery-controls input:focus, .gallery-controls select:focus {
-    outline: none;
-    border-color: #41d8bf;
-    box-shadow: 0 0 0 2px rgba(65, 216, 191, 0.2);
-}
-
-.gallery-controls input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.gallery-controls button {
-    background: var(--accent);
-    color: var(--dark);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Roboto Mono', monospace;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    min-width: 100px;
-}
-
-.gallery-controls button:hover {
-    background: var(--secondary);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(110, 72, 170, 0.3);
-}
-
-.gallery-controls button:active {
-    transform: translateY(0);
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.gallery-item {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: rgba(20, 20, 35, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.gallery-item:hover {
-    transform: scale(1.05) translateY(-5px);
-    box-shadow: 0 10px 25px rgba(65, 216, 191, 0.3);
-    border-color: rgba(65, 216, 191, 0.5);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.1);
-}
-
-.gallery-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-    padding: 20px;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-    backdrop-filter: blur(2px);
-}
-
-.gallery-item:hover .gallery-overlay {
-    transform: translateY(0);
-}
-
-.image-title {
-    color: white;
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-family: 'Roboto Mono', monospace;
-    font-size: 0.9rem;
-}
-
-.image-category {
-    color: var(--accent);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: 'Roboto Mono', monospace;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .gallery-controls {
-        flex-direction: column;
+document.addEventListener('DOMContentLoaded', () => {
+    // Tab functionality (consistent with other features)
+    const tabs = document.querySelectorAll('.tab');
+    const codeContents = document.querySelectorAll('.code-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            codeContents.forEach(c => c.classList.remove('active'));
+            
+            tab.classList.add('active');
+            const tabName = tab.getAttribute('data-tab');
+            document.querySelector(`.${tabName}-code`).classList.add('active');
+        });
+    });
+    
+    // Gallery data - using colored placeholders for demo
+    const galleryData = [
+        { id: 1, title: 'Mountain View', category: 'nature', color: '#2a4a3a' },
+        { id: 2, title: 'Code Terminal', category: 'tech', color: '#3a3a5a' },
+        { id: 3, title: 'Ocean Waves', category: 'nature', color: '#1a5a7a' },
+        { id: 4, title: 'Digital Matrix', category: 'tech', color: '#4a2a6a' },
+        { id: 5, title: 'Color Splash', category: 'abstract', color: '#9d50bb' },
+        { id: 6, title: 'Forest Path', category: 'nature', color: '#3a5a2a' },
+        { id: 7, title: 'Data Flow', category: 'tech', color: '#2a4a6a' },
+        { id: 8, title: 'Geometric Pattern', category: 'abstract', color: '#6e48aa' },
+        { id: 9, title: 'Desert Sunset', category: 'nature', color: '#cc7722' },
+        { id: 10, title: 'Server Rack', category: 'tech', color: '#333355' },
+        { id: 11, title: 'Fluid Art', category: 'abstract', color: '#41d8bf' },
+        { id: 12, title: 'City Lights', category: 'tech', color: '#556699' }
+    ];
+    
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const searchInput = document.getElementById('searchFilter');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const shuffleButton = document.getElementById('shuffleGallery');
+    const resetButton = document.getElementById('resetGallery');
+    
+    let currentImages = [...galleryData];
+    
+    // Initialize gallery
+    function initializeGallery() {
+        renderGallery(currentImages);
+        
+        // Search filter
+        searchInput.addEventListener('input', (e) => {
+            filterGallery(e.target.value, categoryFilter.value);
+        });
+        
+        // Category filter
+        categoryFilter.addEventListener('change', (e) => {
+            filterGallery(searchInput.value, e.target.value);
+        });
+        
+        // Shuffle functionality
+        shuffleButton.addEventListener('click', () => {
+            shuffleImages();
+        });
+        
+        // Reset functionality
+        resetButton.addEventListener('click', () => {
+            resetGallery();
+        });
     }
     
-    .gallery-controls input,
-    .gallery-controls select,
-    .gallery-controls button {
-        width: 100%;
-        min-width: auto;
+    // Render gallery items
+    function renderGallery(images) {
+        galleryGrid.innerHTML = '';
+        
+        if (images.length === 0) {
+            galleryGrid.innerHTML = `
+                <div class="no-results">
+                    <h3>No images found</h3>
+                    <p>Try a different search term or category</p>
+                </div>
+            `;
+            return;
+        }
+        
+        images.forEach(image => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `
+                <div class="gallery-image" style="background: linear-gradient(135deg, ${image.color}, ${darkenColor(image.color, 30)})"></div>
+                <div class="gallery-overlay">
+                    <div class="image-title">${image.title}</div>
+                    <div class="image-category">${image.category}</div>
+                </div>
+            `;
+            galleryGrid.appendChild(item);
+        });
     }
     
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
+    // Filter gallery
+    function filterGallery(searchTerm, category) {
+        let filtered = galleryData;
+        
+        // Search filter
+        if (searchTerm) {
+            filtered = filtered.filter(image => 
+                image.title.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+        
+        // Category filter
+        if (category !== 'all') {
+            filtered = filtered.filter(image => image.category === category);
+        }
+        
+        currentImages = filtered;
+        renderGallery(currentImages);
     }
-}
-
-@media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    
+    // Shuffle images
+    function shuffleImages() {
+        const shuffled = [...currentImages];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        currentImages = shuffled;
+        renderGallery(currentImages);
     }
-}
+    
+    // Reset gallery
+    function resetGallery() {
+        searchInput.value = '';
+        categoryFilter.value = 'all';
+        currentImages = [...galleryData];
+        renderGallery(currentImages);
+    }
+    
+    // Helper function to darken colors
+    function darkenColor(color, percent) {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) - amt;
+        const G = (num >> 8 & 0x00FF) - amt;
+        const B = (num & 0x0000FF) - amt;
+        
+        return `#${(0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+            (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1)}`;
+    }
+    
+    // Initialize
+    initializeGallery();
+    
+    // Console message specific to this feature
+    console.log('%cImage Gallery Loaded', 'color: #6e48aa; font-weight: bold;');
+    console.log('%cTry searching for "mountain" or filtering by "tech"', 'color: #41d8bf;');
+});
